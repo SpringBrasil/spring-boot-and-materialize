@@ -31,6 +31,7 @@ Sistema de controle de contas à pagar e receber
 * Banco de dados
 * HTML
 * JavaScript
+* SQL
 
 # Autor
 Lucas Barros Santos
