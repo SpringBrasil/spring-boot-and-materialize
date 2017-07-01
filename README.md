@@ -7,17 +7,24 @@ Sistema de controle de contas à pagar e receber
 - Spring Boot
 - Spring IoC
 - Materialize
+- Hibernate
+- JPA
+- DTO (Objeto de transferência de dados)
+- JSON
 - CSS
 - JQuery
-- Consultas dinâmicas com Spring Data 
+- Ajax
+- Consultas dinâmicas com Spring Data
 - Relacionamentos entre tabelas
 - Mapeamento das entidades
+- Bean Validation
 - Thymeleaf
 - Design Responsivo
 - Maven
 - MySQL
 - Tomcat
-- Bean Validation
+- Usar métodos HTTP para serviços RESTful
+- Relatórios com (Jaspersoft Studio)
 
 # Requisitos
 * Orientação a Objeto
