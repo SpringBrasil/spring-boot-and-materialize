@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="/layout/LayoutPadrao">
+
+<head>
+    <title th:text="${codigo == null ? 'Cadastro de título' : 'Edição de título'}">Cadastro de título</title>
+</head>
+
+<section layout:fragment="conteudo">
+
+
+    <div class="container">
+        <div class="section">
+            <div th:include="/fragments/MensagemInfo"></div>
+            <h4 th:text="${codigo == null ? 'Cadastro de título' : 'Edição de título'}">Cadastro de Título</h4>
+
+            <div class="row">
+                <div class="col s12 m12">
+                    <div class="card hoverable">
+                        <div class="card-content black-text">
+                            <span class="card-title" th:text="${codigo == null ? 'Cadastro de título' : 'Edição de título'}">Cadastro de título</span>
+
+                            <div class="row">
+                                <form id="form-cadastro-titulo" method="post" th:action="@{/titulos/novo}" th:object="${titulo}" class="col s12">
+                                    <input type="hidden" th:value="*{codigo}" name="codigo"/>
+
+                                    <div class="row">
+                                        <div class="input-field s12 col m6">
+                                            <i class="material-icons prefix">textsms</i>
+                                            <input type="text" id="autocomplete-input-entidade"
+                                                   placeholder="Pesquise por nome da entidade"
+                                                   autocomplete="off"
+                                                   required="required"
+                                                   class="autocomplete"/>
+                                            <label for="autocomplete-input-entidade">Entidade</label>
+                                            <input type="hidden" name="entidade" id="entidade" value=""/>
+                                        </div>
+
+                                        <div class="input-field s12 col m5">
+                                            <select id="comboTipoDePagamento" class="validate"
+                                                    required="required"
+                                                    th:field="*{tipoDePagamento}">
+                                                <option value="">Tipo de pagamento</option>
+                                                <option th:each="pagamento : ${tiposDePagamento}"
+                                                        th:text="${pagamento.descricao}"
+                                                        th:value="${pagamento.codigo}"></option>
+                                            </select>
+
+                                            <label for="comboTipoDePagamento">Pagamento</label>
+                                        </div>
+
+                                        <div class="s12 col m1">
+                                            <a class="tooltipped btn-floating btn-large waves-effect waves-light deep-purple darken-4 js-abrir-modal-noto-tipo"
+                                               href="#modal-cadastro-rapido-tipo-de-pagamento"
+                                               data-position="top" data-delay="50"
+                                               data-tooltip="Tipo de pagamento">
+                                                <i class="material-icons">add</i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="input-field col m12 s12 l12">
+                                            <div class="input-field col s12">
+                                                <textarea id="textarea" class="materialize-textarea validate"
+                                                          th:field="*{descricao}"
+                                                          data-length="255">
+                                                </textarea>
+
+                                                <label for="textarea">Descrição</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="input-field s12 col m6">
+                                            <input id="dataDeValidade" type="text" class="datepicker"
+                                                   required="required"
+                                                   th:field="*{dataDeValidade}"
+                                                   th:classappend="${#fields.hasErrors('dataDeValidade')} ? invalid"/>
+
+                                            <label for="dataDeValidade"
+                                                   data-error="Validade deve ser informada">Data de validade</label>
+                                        </div>
+
+                                        <div class="input-field s12 col m6">
+                                            <input id="dataDoPagamento" type="text" class="datepicker"
+                                                   th:field="*{dataDoPagamento}"/>
+
+                                            <label for="dataDoPagamento">Data do pagamento</label>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="input-field s12 col m4">
+                                            <input id="valor" type="text" class="validate js-moeda"
+                                                   th:classappend="${#fields.hasErrors('valor')} ? invalid"
+                                                   th:field="*{valor}"/>
+
+                                            <label for="valor" data-error="Valor deve ser informado">Valor</label>
+                                        </div>
+
+                                        <div class="input-field s12 col m4">
+                                            <input id="valorOriginal" type="text" class="validate js-moeda"
+                                                   th:field="*{valorOriginal}"/>
+
+                                            <label for="valorOriginal">Valor original</label>
+                                        </div>
+
+                                        <div class="input-field s12 col m4">
+                                            <input id="valorPago" type="text" class="validate js-moeda"
+                                                   th:field="*{valorPago}"/>
+
+                                            <label for="valorPago">Valor pago</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="input-field s12 col m6">
+                                            <select id="tipo" class="validate" th:field="*{tipo}"
+                                                    required="required">
+                                                <option value="" selected="selected">Selecione o tipo</option>
+                                                <option th:each="tipo : ${todosOsTipos}"
+                                                        th:text="${tipo.descricao}"
+                                                        th:value="${tipo}">Entrada</option>
+                                            </select>
+                                            <label for="tipo">Tipo</label>
+                                        </div>
+
+                                        <div class="input-field s12 col m6">
+                                            <select id="situacao" class="validate" th:field="*{situacao}"
+                                                    required="required">
+                                                <option value="" selected="selected">Selecione a situação</option>
+                                                <option th:each="situacao : ${todasAsSituacoes}"
+                                                        th:text="${situacao.descricao}"
+                                                        th:value="${situacao}">Compensado</option>
+                                            </select>
+                                            <label for="situacao">Situação</label>
+                                        </div>
+
+                                    </div>
+
+                                    <br/>
+                                    <br/>
+                                    <button class="btn deep-purple darken-4 waves-effect waves-light" type="submit" name="action">Salvar
+                                        <i class="material-icons right">send</i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Estrutura -->
+    <div id="modal-cadastro-rapido-tipo-de-pagamento" class="modal">
+        <div class="modal-content">
+            <h4>Novo tipo de pagamento</h4>
+            <span class="hide js-mensagem-de-erro">Tem certeza que deseja remover a título ? </span>
+        </div>
+        <div class="modal-footer">
+            <form th:action="@{/titulos}" method="post">
+
+                <div class="row">
+                    <div class="input-field col m6 s12">
+                        <input id="input-descricao-do-novo-tipo-de-pagamento" type="text" class="validate" />
+
+                        <label for="input-descricao-do-novo-tipo-de-pagamento"
+                               data-error="Descrição é obrigatória">Descrição</label>
+                    </div>
+                </div>
+
+                <a href="#!" class="modal-action modal-close waves-effect waves-light btn teal darken-3">Cancelar</a>
+                <button type="submit"
+                        class="modal-action js-novo-tipo-de-pagamento-btn waves-effect waves-light btn deep-purple darken-4"
+                        style="margin: 6px">Salvar
+                </button>
+            </form>
+        </div>
+    </div>
+
+</section>
+<th:block layout:fragment="javascript-extra">
+    <script th:src="@{/javascript/financeiro.js}"></script>
+    <script th:src="@{/javascript/titulo.autocomplete-estidade.js}"></script>
+    <script th:src="@{/javascript/tipoDePagamento.cadastro-rapido.js}"></script>
+</th:block>
+
+</html>

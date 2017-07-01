@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/LayoutPadrao}">
+
+<head>
+    <title>Pesquisa de entidade</title>
+</head>
+
+<body>
+<section layout:fragment="conteudo">
+
+
+    <div class="container">
+        <div class="section">
+            <!-- Colocar mensagens aqui... -->
+            <div th:include="/fragments/MensagemInfo"></div>
+            <div th:include="/fragments/MensagemErro"></div>
+            <h4>Pesquisa de entidade</h4>
+
+            <div class="row">
+                <form class="col s12" method="get" th:action="@{/entidades}" th:object="${entidade}">
+                    <div class="row">
+                        <div class="input-field col m12 s12 l6">
+                            <i class="material-icons prefix">search</i>
+                            <input id="icon_prefix" type="text" th:field="*{nome}"/>
+                            <label for="icon_prefix">Informe o nome</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row">
+                <div class="col s12 m12">
+                    <div class="card hoverable">
+                        <div class="card-content black-text">
+                            <span class="card-title">Entidades</span>
+
+                            <table class="responsive-table highlight">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nome</th>
+                                    <th>CPF/CNPJ</th>
+                                    <th>E-mail</th>
+                                    <th>Telefone</th>
+                                    <th>Endereço</th>
+                                    <th>Bairro</th>
+                                    <th>Cidade</th>
+                                    <th>Ações</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="entidade : ${pagina.conteudo}">
+                                    <td th:text="${entidade.codigo}">1</td>
+                                    <td th:text="${entidade.nome}">Lucas</td>
+                                    <td th:text="${entidade.cpfOuCnpj}">Lucas</td>
+                                    <td th:text="${entidade.email}"></td>
+                                    <td th:text="${entidade.telefone}"></td>
+                                    <td th:text="${entidade.endereco}"></td>
+                                    <td th:text="${entidade.bairro}"></td>
+                                    <td th:text="${entidade.cidade}"></td>
+                                    <td>
+                                        <a  class="tooltipped" data-position="top" data-delay="50"
+                                            data-tooltip="Editar"
+                                            th:href="@{/entidades/{codigo}(codigo=${entidade.codigo})}">
+                                            <i class="tiny material-icons">mode_edit</i>
+                                        </a>
+                                        <a class="tooltipped js-remover-entidade-btn" data-position="top"
+                                           href="#modal-remover-entidade"
+                                           th:attr="data-codigo=${entidade.codigo}, data-nome=${entidade.nome}"
+                                           data-delay="50" data-tooltip="Apagar"
+                                           style="margin-left: 9px">
+                                            <i class="tiny material-icons">delete</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="9" th:if="${pagina.vazia}">Nenhuma entidade encontrada!</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:replace="/fragments/Paginacao :: Pagination (${pagina})"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Estrutura -->
+    <div id="modal-remover-entidade" class="modal">
+        <div class="modal-content">
+            <h4>Exclusão de entidade</h4>
+            <span>Tem certeza que deseja remover a entidade ? </span>
+        </div>
+        <div class="modal-footer">
+            <form th:attr="data-url-remover=@{/entidades}" method="post">
+
+                <input type="hidden" name="_method" value="DELETE"/>
+
+                <button type="submit"
+                        class="modal-action modal-close waves-effect waves-light btn red darken-1"
+                        style="margin: 6px">Sim</button>
+
+                <a href="#!" class="modal-action modal-close waves-effect waves-light btn teal darken-3">Não</a>
+            </form>
+        </div>
+    </div>
+
+</section>
+
+<th:block layout:fragment="javascript-extra">
+    <script th:src="@{/javascript/financeiro.js}"></script>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/LayoutPadrao}">
+
+<head>
+    <title>Contas à receber</title>
+</head>
+
+<body>
+<section layout:fragment="conteudo">
+    <div class="container">
+        <div class="section">
+            <div th:include="/fragments/MensagemErro"></div>
+            <h4>Contas à pagar</h4>
+
+            <div class="row">
+                <div class="col s12 m12">
+                    <div class="card hoverable">
+                        <div class="card-content black-text">
+                            <span class="card-title">Relatório de contas à pagar</span>
+
+                            <div class="row">
+                                <form class="col s12" method="post" th:object="${relatorioContasAReceber}"
+                                      th:action="@{/relatorios/contasAPagar}" target="_blank">
+
+                                    <div class="row">
+                                        <div class="input-field col m6 s12">
+                                            <input id="dataInicio" type="text" class="datepicker"
+                                                   required="required"
+                                                   th:field="*{data_inicio}"/>
+
+                                            <label for="dataInicio"
+                                                   data-error="Data início deve ser informada">Data de início</label>
+                                        </div>
+
+                                        <div class="input-field col m6 s12">
+                                            <input id="dataFim" type="text" class="datepicker"
+                                                   required="required"
+                                                   th:field="*{data_fim}"/>
+
+                                            <label for="dataFim"
+                                                   data-error="Data fim deve ser informada">Data final</label>
+                                        </div>
+                                    </div>
+
+                                    <br/><br/>
+                                    <button class="btn waves-effect deep-purple darken-4" type="submit" name="action">
+                                        Emitir
+                                        <i class="material-icons right">send</i>
+                                    </button>
+                                </form>
+                            </div>
+
+                        </div>
+
+                        <div class="card-action">
+                            <a href="#">Voltar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+</body>
+</html>

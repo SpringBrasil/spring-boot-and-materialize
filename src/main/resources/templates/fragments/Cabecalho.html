@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<nav class="deep-purple darken-4" role="navigation" th:fragment="Cabecalho">
+    <div class="nav-wrapper container"><a id="logo-container" th:href="@{/}" class="brand-logo">Spring Boot</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a th:href="@{/entidades}">Entidades</a></li>
+            <li><a th:href="@{/titulos}">Títulos</a></li>
+            <li><a class="dropdown-button" href="#!" data-activates="dropdown2">Cadastros<i class="material-icons right">arrow_drop_down</i></a></li>
+            <ul id="dropdown2" class="dropdown-content">
+                <li><a th:href="@{/entidades/novo}">Entidade</a></li>
+                <li><a th:href="@{/titulos/novo}">Título</a></li>
+            </ul>
+
+            <li><a class="dropdown-button" href="#!" data-activates="dropdown-relatorios">Relatórios<i class="material-icons right">arrow_drop_down</i></a></li>
+            <ul id="dropdown-relatorios" class="dropdown-content">
+                <li><a th:href="@{/relatorios/contasAReceber}">À receber</a></li>
+                <li><a th:href="@{/relatorios/contasAPagar}">À pagar</a></li>
+            </ul>
+        </ul>
+
+        <ul id="nav-mobile" class="side-nav">
+            <li><a th:href="@{/entidades}">Entidades</a></li>
+            <li><a th:href="@{/titulos}">Títulos</a></li>
+            <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Cadastros<i class="material-icons right">arrow_drop_down</i></a></li>
+            <li><a class="dropdown-button" href="#!" data-activates="dropdown-relatorios-mobile">Relatórios<i class="material-icons right">arrow_drop_down</i></a></li>
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+
+    <ul id="dropdown1" class="dropdown-content">
+        <li><a th:href="@{/entidades/novo}">Entidade</a></li>
+        <li><a th:href="@{/titulos/novo}">Título</a></li>
+    </ul>
+
+    <ul id="dropdown-relatorios-mobile" class="dropdown-content">
+        <li><a th:href="@{/relatorios/contasAReceber}">À receber</a></li>
+        <li><a th:href="@{/relatorios/contasAPagar}">À pagar</a></li>
+    </ul>
+
+</nav>
+
+</html>

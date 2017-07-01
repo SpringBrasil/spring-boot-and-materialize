@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <title>Começanco com Spring Boot</title>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link th:href="@{/vendor/css/materialize.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link th:href="@{/vendor/css/style.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+
+<header th:replace="/fragments/Cabecalho :: Cabecalho"></header>
+
+<!-- Conteudo dinamico -->
+<section layout:fragment="conteudo">
+
+</section>
+
+<div th:replace="/fragments/Footer :: Footer">
+
+</div>
+
+<!--  Scripts-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script th:src="@{/vendor/js/materialize.js}"></script>
+<script th:src="@{/vendor/js/init.js}"></script>
+<script th:src="@{/vendor/js/jquery.maskMoney.js}"></script>
+<th:block layout:fragment="javascript-extra"/>
+</body>
+</html>

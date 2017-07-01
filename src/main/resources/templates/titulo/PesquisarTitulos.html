@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/LayoutPadrao}">
+
+<head>
+    <title>Pesquisa de título</title>
+</head>
+
+<body>
+<section layout:fragment="conteudo">
+
+
+    <div class="container">
+        <div class="section">
+            <!-- Colocar mensagens aqui... -->
+            <div th:include="/fragments/MensagemInfo"></div>
+            <h4>Pesquisa de título</h4>
+
+            <div class="row">
+                <form class="col s12" method="get" th:action="@{/titulos}" th:object="${titulo}">
+                    <div class="row m12 s12">
+                        <div class="card">
+                            <div class="row">
+                                <div class="card-content black-text">
+                                    <div class="input-field col m6 s12 l6">
+                                        <i class="material-icons prefix">search</i>
+                                        <input id="icon_prefix" type="text" th:field="*{descricao}"/>
+                                        <label for="icon_prefix">Informe a descrição</label>
+                                    </div>
+
+                                    <div class="input-field s12 col m6">
+                                        <select id="selection" class="validate" th:field="*{entidade}">
+                                            <option value="" selected="selected">Todas</option>
+                                            <option th:each="entidade : ${listaDeEntidades}"
+                                                    th:text="${entidade.nome}"
+                                                    th:value="${entidade.codigo}">Lucas Barros</option>
+                                        </select>
+                                        <label for="selection">Entidade</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-action">
+                                <button class="btn deep-purple darken-4 waves-effect waves-light" type="submit" name="action">Pesquisar
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row">
+                <div class="col s12 m12">
+                    <div class="card hoverable">
+                        <div class="card-content black-text">
+                            <span class="card-title">títulos</span>
+
+                            <table class="responsive-table highlight">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Cliente</th>
+                                    <th>Descrição</th>
+                                    <th>Validade</th>
+                                    <th>Pagamento</th>
+                                    <th>Valor</th>
+                                    <th>Valor pago</th>
+                                    <th>Tipo</th>
+                                    <th>Situação</th>
+                                    <th>Pagamento</th>
+                                    <th>Ações</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="titulo : ${pagina.conteudo}">
+                                    <td th:text="${titulo.codigo}">1</td>
+                                    <td th:text="${titulo.entidade.nome}">Lucas</td>
+                                    <td th:text="${titulo.descricao}">Lucas</td>
+                                    <td th:text="${{titulo.dataDeValidade}}">Lucas</td>
+                                    <td th:text="${{titulo.dataDoPagamento}}"></td>
+                                    <td th:text="|R$ ${{titulo.valor}}|"></td>
+                                    <td th:text="|R$ ${{titulo.valorPago == null ? 0 : titulo.valorPago}} |"></td>
+                                    <td th:text="${titulo.tipo.descricao}"></td>
+                                    <td th:text="${titulo.situacao.descricao}"></td>
+                                    <td th:text="${titulo.tipoDePagamento.descricao}"></td>
+                                    <td>
+                                        <a class="tooltipped" data-position="top" data-delay="50"
+                                           data-tooltip="Editar"
+                                           th:href="@{/titulos/{codigo}(codigo=${titulo.codigo})}">
+                                            <i class="tiny material-icons">mode_edit</i>
+                                        </a>
+                                        <a class="tooltipped js-remover-entidade-btn" data-position="top"
+                                           href="#modal-remover-entidade"
+                                           th:attr="data-codigo=${titulo.codigo}, data-nome=${titulo.descricao}"
+                                           data-delay="50" data-tooltip="Apagar"
+                                           style="margin-left: 9px">
+                                            <i class="tiny material-icons">delete</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="9" th:if="${#lists.isEmpty(pagina.vazia)}">Nenhum título encontrado!</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:replace="/fragments/Paginacao :: Pagination (${pagina})"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Estrutura -->
+    <div id="modal-remover-entidade" class="modal">
+        <div class="modal-content">
+            <h4>Exclusão de título</h4>
+            <span>Tem certeza que deseja remover a título ? </span>
+        </div>
+        <div class="modal-footer">
+            <form th:attr="data-url-remover=@{/titulos}" method="post">
+
+                <input type="hidden" name="_method" value="DELETE"/>
+
+                <button type="submit"
+                        class="modal-action modal-close waves-effect waves-light btn red darken-1"
+                        style="margin: 6px">Sim
+                </button>
+
+                <a href="#!" class="modal-action modal-close waves-effect waves-light btn teal darken-3">Não</a>
+            </form>
+        </div>
+    </div>
+
+</section>
+
+<th:block layout:fragment="javascript-extra">
+    <script th:src="@{/javascript/financeiro.js}"></script>
+</th:block>
+</body>
+</html>
